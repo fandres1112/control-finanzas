@@ -3,6 +3,8 @@ import { auth } from '@clerk/nextjs/server'
 import { UserButton } from '@clerk/nextjs'
 import DashboardClient from '@/components/DashboardClient'
 
+export const dynamic = 'force-dynamic'
+
 export default async function Dashboard({
   searchParams,
 }: {
