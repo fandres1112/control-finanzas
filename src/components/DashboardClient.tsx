@@ -120,12 +120,12 @@ export default function DashboardClient({
 
   const gastosPorCategoria = optimisticMonthTransactions
     .filter((t) => t.tipo === 'Gasto')
-    .reduce((acc: { [key: string]: number }, t) => {
+    .reduce<{ [key: string]: number }>((acc, t) => {
       acc[t.categoria] = (acc[t.categoria] || 0) + t.monto
       return acc
     }, {})
 
-  const totalGastosMes = Object.values(gastosPorCategoria).reduce((acc, v) => acc + v, 0)
+  const totalGastosMes = (Object.values(gastosPorCategoria) as number[]).reduce((acc, v) => acc + v, 0)
 
   let gradientString = ''
   let accumulatedPercentage = 0
