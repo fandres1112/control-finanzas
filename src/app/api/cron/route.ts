@@ -1,11 +1,13 @@
 import { NextResponse } from 'next/server'
 import prisma from '@/lib/db'
+import { headers } from 'next/headers'
 
 export const dynamic = 'force-dynamic'
 
 export async function GET(request: Request) {
   // 1. Verificar el token de seguridad
-  const authHeader = request.headers.get('authorization')
+  const headersList = headers()
+  const authHeader = headersList.get('authorization')
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return new Response('No autorizado', { status: 401 })
   }
