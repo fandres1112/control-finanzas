@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Transaction {
+  id          Int      @id @default(autoincrement())
+  monto       Float
+  descripcion String?
+  tipo        String
+  categoria   String
+  fecha       DateTime @default(now())
+  userId      String?
+  recurringId Int?
+}
+
+model Budget {
+  id     Int    @id @default(autoincrement())
+  monto  Float
+  mes    Int
+  ano    Int
+  userId String?
+  @@unique([mes, ano, userId])
+}
+
+model RecurringTransaction {
+  id          Int      @id @default(autoincrement())
+  monto       Float
+  descripcion String?
+  tipo        String
+  categoria   String
+  frecuencia  String   // "Mensual" or "Quincenal"
+  dia         Int      @default(1) // Día del mes para la transacción
+  userId      String?
+}
