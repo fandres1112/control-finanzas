@@ -10,7 +10,8 @@ export default async function Dashboard({
 }: {
   searchParams: { categoria?: string; tipo?: string; mes?: string; ano?: string }
 }) {
-  const { userId } = await auth()
+  try {
+    const { userId } = await auth()
   
   if (!userId) {
     return (
@@ -114,4 +115,15 @@ export default async function Dashboard({
       </div>
     </main>
   )
+  } catch (error) {
+    console.error("Error in dashboard:", error)
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-red-600 mb-2">Error al cargar los datos</h1>
+          <p className="text-slate-600 dark:text-slate-400">Por favor verifica la conexión a la base de datos o las variables de entorno.</p>
+        </div>
+      </div>
+    )
+  }
 }
